@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  native:
+    image: ghcr.io/graalvm/jdk-community:21.0.1
+    container_name: exco_native
+    working_dir: "${PWD}"
+    command: "clojure -T:build native :project command-line"
+    profiles: [native]
+
+  poly:
+    image: clojure:latest
+    container_name: exco_poly
+    working_dir: "${PWD}"
+    command: "clojure -M:poly shell"
+    profiles: [poly]
+    volumes:
+      - ".:${PWD}:cached"
+      - ".:/app:cached"
+      - "m2_data:/root/.m2:cached"
+
+  pg_16:
+    image: postgres:16
+    container_name: exco_pg_16
+    volumes:
+      - 'pg_16_data:/var/lib/postgresql/data'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=main
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  pg_16_data:
+    driver: local
+  m2_data:
+    driver: local
+
+networks:
+  clojure-network:
+    driver: bridge
+    external: true

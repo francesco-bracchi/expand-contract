@@ -1,0 +1,42 @@
+{:deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        ;; com.github.clj-easy/graal-build-time {:mvn/version "1.0.5"}
+        ;; components
+        exco/column {:local/root "../../components/column"}
+        exco/table {:local/root "../../components/table"}
+        exco/index {:local/root "../../components/index"}
+        exco/schema {:local/root "../../components/schema"}
+        exco/workspace {:local/root "../../components/workspace"}
+        exco/migration {:local/root "../../components/migration"}
+        exco/db {:local/root "../../components/db"}
+        exco/fs {:local/root "../../components/fs"}
+        exco/format {:local/root "../../components/format"}
+        exco/hunk {:local/root "../../components/hunk"}
+        exco/patch {:local/root "../../components/patch"}
+        exco/patch-apply {:local/root "../../components/patch-apply"}
+        exco/defauts {:local/root "../../components/defaults"}
+        exco/schema-ddl {:local/root "../../components/schema-ddl"}
+        exco/command {:local/root "../../components/command"}
+        exco/workspace-io {:local/root "../../components/workspace-io"}
+        exco/handler-init {:local/root "../../components/handler-init"}
+        exco/handler-create-migration {:local/root "../../components/handler-create-migration"}
+        exco/handler-latest {:local/root "../../components/handler-latest"}
+        exco/handler-check {:local/root "../../components/handler-check"}
+        exco/handler-create-table {:local/root "../../components/handler-create-table"}
+        exco/handler-drop-table {:local/root "../../components/handler-drop-table"}
+        exco/handler-schema {:local/root "../../components/handler-schema"}
+        exco/handler-help {:local/root "../../components/handler-help"}
+        exco/handler-add-column {:local/root "../../components/handler-add-column"}
+        exco/handler-drop-column {:local/root "../../components/handler-drop-column"}
+        exco/handler-rename-table {:local/root "../../components/handler-rename-table"}
+        exco/handler-ddl {:local/root "../../components/handler-ddl"}
+        exco/handler {:local/root "../../components/handler"}
+        exco/ddl {:local/root "../../components/ddl"}
+        exco/strategy {:local/root "../../components/strategy"}
+        exco/ddl-postgresql {:local/root "../../components/ddl-postgresql"}
+
+        ;; bases
+        exco/cli {:local/root "../../bases/cli"}}
+
+ :aliases {:test {:extra-paths []
+                  :extra-deps  {}}
+           :uberjar {:main exco.cli.core}}}

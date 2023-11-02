@@ -1,0 +1,85 @@
+{:aliases  {:dev {:extra-paths ["development/src"]
+                  :extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}
+                               ;; components
+                               exco/column {:local/root "components/column"}
+                               exco/table {:local/root "components/table"}
+                               exco/index {:local/root "components/index"}
+                               exco/schema {:local/root "components/schema"}
+                               exco/db {:local/root "components/db"}
+                               exco/defaults {:local/root "components/defaults"}
+                               exco/format {:local/root "components/format"}
+                               exco/workspace {:local/root "components/workspace"}
+                               exco/workspace-io {:local/root "components/workspace-io"}
+                               exco/hunk {:local/root "components/hunk"}
+                               exco/migration {:local/root "components/migration"}
+                               exco/patch {:local/root "components/patch"}
+                               exco/patch-apply {:local/root "components/patch-apply"}
+                               exco/command {:local/root "components/command"}
+                               exco/fs {:local/root "components/fs"}
+                               exco/schema-ddl {:local/root "components/schema-ddl"}
+                               exco/handler {:local/root "components/handler"}
+                               exco/handler-help {:local/root "components/handler-help"}
+                               exco/handler-init {:local/root "components/handler-init"}
+                               exco/handler-create-migration {:local/root "components/handler-create-migration"}
+                               exco/handler-latest {:local/root "components/handler-latest"}
+                               exco/handler-schema {:local/root "components/handler-schema"}
+                               exco/handler-check {:local/root "components/handler-check"}
+                               exco/handler-create-table {:local/root "components/handler-create-table"}
+                               exco/handler-drop-table {:local/root "components/handler-drop-table"}
+                               exco/handler-add-column {:local/root "components/handler-add-column"}
+                               exco/handler-drop-column {:local/root "components/handler-drop-column"}
+                               exco/handler-rename-table {:local/root "components/handler-rename-table"}
+                               exco/handler-ddl {:local/root "components/handler-ddl"}
+                               exco/ddl {:local/root "components/ddl"}
+                               exco/ddl-postgres {:local/root "components/ddl-postgresql"}
+                               exco/connection {:local/root "components/connection"}
+                               exco/state {:local/root "components/state"}
+                               ;; exco/strategy {:local/root "components/strategy"}
+                               ;; bases
+                               exco/cli {:local/root "bases/cli"}
+                               }}
+            :test {:extra-deps {org.clojure/test.check {:mvn/version "1.1.1"}}
+                   :extra-paths [;; components
+                                 "components/column/test"
+                                 "components/table/test"
+                                 "components/index/test"
+                                 "components/schema/test"
+                                 "components/db/test"
+                                 "components/defaults/test"
+                                 "components/workspace/test"
+                                 "components/workspace-io/test"
+                                 "components/hunk/test"
+                                 "components/migration/test"
+                                 "components/patch/test"
+                                 "components/patch-apply/test"
+                                 "components/command/test"
+                                 "components/fs/test"
+                                 "components/handler/test"
+                                 "components/handler-init/test"
+                                 "components/handler-create-migration/test"
+                                 "components/handler-latest/test"
+                                 "components/handler-check/test"
+                                 "components/handler-create-table/test"
+                                 "components/handler-drop-table/test"
+                                 "components/handler-schema/test"
+                                 "components/handler-help/test"
+                                 "components/handler-add-column/test"
+                                 "components/handler-drop-column/test"
+                                 "components/handler-rename-table/test"
+                                 "components/schema-ddl/test"
+                                 "components/ddl/test"
+                                 "components/ddl-postgresql/test"
+                                 ;; "components/strategy/test"
+                                 "components/connection/test"
+                                 "components/state/test"
+                                 ;; bases
+                                 "bases/cli/test"]}
+            :build {:deps {io.github.clojure/tools.build
+                           {:git/tag "v0.9.6"
+                            :git/sha "8e78bcc"}}
+                    :ns-default build}
+            :poly {:main-opts ["-m" "polylith.clj.core.poly-cli.core"]
+                   :extra-deps {polyfy/polylith
+                                {:git/url   "https://github.com/polyfy/polylith"
+                                 :sha       "779d0815fb3fbb7dac0a278448926711a7efa82c"
+                                 :deps/root "projects/poly"}}}}}

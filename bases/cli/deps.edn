@@ -1,0 +1,6 @@
+{:paths ["src" "resources"]
+ :deps {
+        ;; com.github.igrishaev/soothe {:mvn/version "0.1.1"}
+        }
+ :aliases {:test {:extra-paths ["test"]
+                  :extra-deps {}}}}

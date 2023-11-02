@@ -1,0 +1,5 @@
+{:paths ["src" "resources"]
+ :deps {org.xerial/sqlite-jdbc {:mvn/version "3.44.0.0"}
+        com.github.seancorfield/honeysql {:mvn/version "2.5.1091"}}
+ :aliases {:test {:extra-paths ["test"]
+                  :extra-deps {}}}}
