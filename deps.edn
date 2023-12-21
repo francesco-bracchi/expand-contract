@@ -78,8 +78,5 @@
                            {:git/tag "v0.9.6"
                             :git/sha "8e78bcc"}}
                     :ns-default build}
-            :poly {:main-opts ["-m" "polylith.clj.core.poly-cli.core"]
-                   :extra-deps {polyfy/polylith
-                                {:git/url   "https://github.com/polyfy/polylith"
-                                 :sha       "779d0815fb3fbb7dac0a278448926711a7efa82c"
-                                 :deps/root "projects/poly"}}}}}
+            :poly {:extra-deps {polylith/clj-poly {:mvn/version "0.2.18"}}
+                   :main-opts  ["-m" "polylith.clj.core.poly-cli.core"]}}}
