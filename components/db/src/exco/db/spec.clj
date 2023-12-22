@@ -1,7 +1,6 @@
 (ns exco.db.spec
   (:require [clojure.spec.alpha :as s]
-            [exco.migration.interface]
-            [exco.db.migrations :as migrations]))
+            [exco.migration.interface]))
 
 (s/def :db/description
   string?)
