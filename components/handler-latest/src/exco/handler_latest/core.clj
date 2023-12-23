@@ -15,19 +15,19 @@
     (format/print-color mig)))
 
 (defn latest
-  [ws db]
-  (let [db (or db (:workspace/default-db ws))]
+  [ws project]
+  (let [project (or project (:workspace/default-project ws))]
     (-> ws
-        :workspace/databases
-        (get db)
-        :db/migrations
+        :workspace/projects
+        (get project)
+        :project/migrations
         (last)
         (print-migration))))
 
 (defn handle*
-  [{:keys [directory workspace-file database]}]
+  [{:keys [directory workspace-file project]}]
   (io/with-base directory
-    (latest (io/read-file workspace-file) database)))
+    (latest (io/read-file workspace-file) project)))
 
 (defn handle
   [cmd]

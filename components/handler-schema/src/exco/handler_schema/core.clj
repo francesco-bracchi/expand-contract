@@ -3,12 +3,12 @@
             [exco.workspace.interface]
             [exco.format.interface :as format]
             [exco.workspace-io.interface :as io]
-            [exco.db.interface :as db]))
+            [exco.project.interface :as project]))
 
 (defn schema
-  [{:workspace/keys [default-db databases]} {:keys [database color]}]
-  (let [db (or (keyword database) default-db)
-        schema (db/schema (databases db))]
+  [{:workspace/keys [default-project projects]} {:keys [project color]}]
+  (let [project (or (keyword project) default-project)
+        schema (project/schema (projects project))]
     (if color
       (format/print-color schema)
       (format/print schema))))

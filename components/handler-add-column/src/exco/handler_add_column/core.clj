@@ -2,7 +2,7 @@
   (:require [clojure.core :as clj]
             [clojure.spec.alpha :s s]
             [exco.defaults.interface  :as defaults]
-            [exco.db.interface :as db]
+            [exco.project.interface :as project]
             [exco.column.interface :as column]
             [exco.patch.interface :as patch]
             [exco.patch-apply.interface  :as pa]
@@ -30,15 +30,15 @@
           :column (column/validate! (column cmd))}])
 
 (defn add-column
-  [{:workspace/keys [default-db databases] :as ws}
-   {:keys [database] :as cmd}]
-  (let [db (or (keyword database) default-db)
+  [{:workspace/keys [default-project projects] :as ws}
+   {:keys [project] :as cmd}]
+  (let [project (or (keyword project) default-project)
         pc (patch cmd)
-        sc (db/schema! (databases db))]
+        sc (project/schema! (projects project))]
     (when-let [errors (seq (pa/check sc pc))]
       (throw (ex-info "cannot add column" {:errors errors})))
     (update-in ws
-               [:workspace/databases db :db/migrations]
+               [:workspace/projects project :project/migrations]
                update-last
                update :migration/patch patch/compose pc)))
 

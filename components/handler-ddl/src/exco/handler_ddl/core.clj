@@ -2,16 +2,16 @@
   (:require [exco.defaults.interface :as defaults]
             [exco.schema-ddl.interface :as ddl]
             [exco.workspace-io.interface :as io]
-            [exco.db.interface :as db]))
+            [exco.project.interface :as project]))
 
 (def default-args
   {:directory defaults/directory
    :workspace-file defaults/workspace-file})
 
 (defn ddl
-  [{:workspace/keys [default-db databases]} {:keys [database]}]
-  (let [db (or (keyword database) default-db)
-        schema (db/schema (databases db))]
+  [{:workspace/keys [default-project projects]} {:keys [project]}]
+  (let [project (or (keyword project) default-project)
+        schema (project/schema (projects project))]
     (ddl/ddl schema)))
 
 (defn handle*

@@ -1,51 +1,51 @@
-(ns exco.db.core
+(ns exco.project.core
   (:refer-clojure :exclude [empty])
   (:require [clojure.spec.alpha :as s]
-            [exco.db.migrations :as migrations]
-            [exco.db.spec]))
+            [exco.project.migrations :as migrations]
+            [exco.project.spec]))
 
 (defn empty
-  ([] #:db{:db/migrations []})
-  ([descr] #:db{:db/migrations [] :description descr}))
+  ([] #:project{:migrations []})
+  ([descr] #:project{:migrations [] :description descr}))
 
 (defn schema
-  [{:db/keys [migrations]}]
+  [{:project/keys [migrations]}]
   (let [{:keys [schema errors]} (migrations/build migrations)]
     (when-not (seq errors) schema)))
 
 (defn schema!
-  [{:db/keys [migrations]}]
+  [{:project/keys [migrations]}]
   (let [{:keys [schema errors] :as data} (migrations/build migrations)]
     (when (seq errors) (throw (ex-info "invalid migration application" data)))
     schema))
 
 (defn migrations-explain
-  [{:db/keys [migrations]}]
+  [{:project/keys [migrations]}]
   (let [{:keys [errors] :as data} (migrations/build migrations)]
     (when (seq errors) data)))
 
 (defn valid?
-  [db]
-  (s/valid? :db/t db))
+  [project]
+  (s/valid? :project/t project))
 
 (defn validate!
-  [db]
-  (when-not (valid? db) (throw (ex-info "invalid db" {:db db :reason (s/explain-data :db/t db)})))
-  db)
+  [project]
+  (when-not (valid? project) (throw (ex-info "invalid project" {:project project :reason (s/explain-data :project/t project)})))
+  project)
 
 (s/fdef empty
-  :ret :db/t)
+  :ret :project/t)
 
 (s/fdef schema
-  :args (s/cat :db :db/t)
+  :args (s/cat :project :project/t)
   :ret (s/nilable :schema/t))
 
 (s/fdef schema!
-  :args (s/cat :db :db/t)
+  :args (s/cat :project :project/t)
   :ret :schema/t)
 
 (s/fdef valid?
   :ret boolean)
 
 (s/fdef validate!
-  :ret :db/t)
+  :ret :project/t)

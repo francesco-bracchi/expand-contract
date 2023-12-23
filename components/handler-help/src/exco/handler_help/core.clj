@@ -48,11 +48,11 @@
     (help-command action)))
 
 (defn help-ws
-  [{:workspace/keys [default-db databases revision]} {:keys [workspace-file]}]
+  [{:workspace/keys [default-project projects revision]} {:keys [workspace-file]}]
   (println "workspace version:" revision)
   (println "workspace file:" (.getAbsolutePath (fs/file workspace-file)))
-  (print "available databases: ") (->> databases keys (map name) (apply prn))
-  (print "default database: ") (prn (name default-db)))
+  (print "available projects: ") (->> projects keys (apply prn))
+  (print "default project: ") (prn default-project))
 
 (defn help
   [ws cmd]

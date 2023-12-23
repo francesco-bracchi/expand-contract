@@ -13,7 +13,6 @@
                  "DATABASE_TO_LOWER=TRUE;"
                  "DEFAULT_NULL_ORDERING=HIGH")})
 
-
 ;; todo: build it via migrations
 (def init-commands
   (-> "state/create.ddl"
@@ -29,34 +28,34 @@
 (conn/with db-spec
   (init))
 
-(defn databases
+(defn projects
   []
-  (conn/many! (q/databases)))
+  (conn/many! (q/projects)))
 
 
-(defn align-databases
+(defn align-projects
   [dbs]
-  (conn/one! (q/align-databases dbs)))
+  (conn/one! (q/align-projects dbs)))
 
 (conn/with db-spec
   (init)
-  (conn/one! ["INSERT INTO `database` (name, description) VALUES (?, ?)" "main" "main description"])
-  (align-databases {:secondary {:db/migrations [], :db/description "secondary application database"}})
-  (databases))
+  (conn/one! ["INSERT INTO `project` (name, description) VALUES (?, ?)" "main" "main description"])
+  (align-projects {:secondary {:db/migrations [], :db/description "secondary application project"}})
+  (projects))
 
-(defn database-id
+(defn project-id
   [db-name]
-  (:database/id
+  (:project/id
    (conn/one!
     (sql/format {:select [:id]
-                 :from [:database]
+                 :from [:project]
                  :where [:= :name (name db-name)]}))))
 
 (conn/with db-spec
   (init)
-  (conn/one! ["INSERT INTO `database` (name, description) VALUES (?, ?)" "main" "main description"])
-  (align-databases {:secondary {:db/migrations [], :db/description "secondary application database"}})
-  (database-id :main))
+  (conn/one! ["INSERT INTO `project` (name, description) VALUES (?, ?)" "main" "main description"])
+  (align-projects {:secondary {:db/migrations [], :db/description "secondary application project"}})
+  (project-id :main))
 
 (defn prefix?
   [prefix list]
@@ -66,9 +65,9 @@
 (defn migrations-query
   [db]
   (-> (sqh/select :migration.*)
-      (sqh/from :database)
-      (sqh/join :migration [:= :migration.database_id :database.id])
-      (sqh/where [:= :database.name (name db)])))
+      (sqh/from :project)
+      (sqh/join :migration [:= :migration.project_id :project.id])
+      (sqh/where [:= :project.name (name db)])))
 
 
 (defn migrations
@@ -81,20 +80,20 @@
 
 (conn/with db-spec
   (init)
-  (conn/one! ["INSERT INTO `database` (name, description) VALUES (?, ?)" "main" "main description"])
-  (align-databases {:secondary {:db/migrations [], :db/description "secondary application database"}})
-  (conn/one! ["INSERT INTO `migration`(`database_id`, `version`, `patch`) VALUES (?, ?, ? FORMAT JSON)" 1 1 (json/write-value-as-bytes {})])
+  (conn/one! ["INSERT INTO `project` (name, description) VALUES (?, ?)" "main" "main description"])
+  (align-projects {:secondary {:db/migrations [], :db/description "secondary application project"}})
+  (conn/one! ["INSERT INTO `migration`(`project_id`, `version`, `patch`) VALUES (?, ?, ? FORMAT JSON)" 1 1 (json/write-value-as-bytes {})])
   (migrations :main))
 
 (defn align-migrations
   [dbname local]
   (let [pre (migrations dbname)
-        {db-id :id} (database-id dbname)
+        {db-id :id} (project-id dbname)
         new (drop (count pre) local)]
     (prn new)))
 
     ;; (-> (sqh/insert-into :migrations)
-    ;;     (sqh/columns :database_id :version :description :patch)
+    ;;     (sqh/columns :project_id :version :description :patch)
     ;;     (sqh/values (map (fn [{:migration/keys [description patch]} version] [db-id version description patch])
     ;;                      new
     ;;                      (range (count pre) (count local))))

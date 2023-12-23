@@ -1,4 +1,4 @@
-(ns exco.db.migrations
+(ns exco.project.migrations
   (:refer-clojure :exclude [apply])
   (:require [exco.schema.interface :as schema]
             [exco.patch-apply.interface :as patch-apply]))

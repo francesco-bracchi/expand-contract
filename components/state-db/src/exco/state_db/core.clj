@@ -6,7 +6,7 @@
 
 (defn create-table
   [name table]
-  (ddl/create-table {:namesapce *namespace*
+  (ddl/create-table {:namespace *namespace*
                      :table-name name
                      :table table}))
 

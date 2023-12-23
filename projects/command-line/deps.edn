@@ -7,7 +7,7 @@
         exco/schema {:local/root "../../components/schema"}
         exco/workspace {:local/root "../../components/workspace"}
         exco/migration {:local/root "../../components/migration"}
-        exco/db {:local/root "../../components/db"}
+        exco/project {:local/root "../../components/project"}
         exco/fs {:local/root "../../components/fs"}
         exco/format {:local/root "../../components/format"}
         exco/hunk {:local/root "../../components/hunk"}

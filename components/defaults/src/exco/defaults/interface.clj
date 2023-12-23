@@ -10,7 +10,7 @@
 (def migrations-dir
   "migrations")
 
-(def db
+(def project
   :main)
 
 (def migration

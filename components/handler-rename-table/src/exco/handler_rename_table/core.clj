@@ -3,7 +3,7 @@
             [clojure.spec.alpha :s s]
             [exco.defaults.interface  :as defaults]
             [exco.patch.interface :as patch]
-            [exco.db.interface :as db]
+            [exco.project.interface :as project]
             [exco.patch-apply.interface  :as pa]
             [exco.format.interface :as format]
             [exco.workspace-io.interface :as io]))
@@ -19,16 +19,16 @@
           :name-to name-to}])
 
 (defn rename-table
-  [{:workspace/keys [default-db databases] :as ws} {:keys [database from to]}]
-  (let [db (or (keyword database) default-db)
+  [{:workspace/keys [default-project projects] :as ws} {:keys [project from to]}]
+  (let [project (or (keyword project) default-project)
         fr (clj/keyword from)
         to (clj/keyword to)
-        sc (db/schema (databases db))
+        sc (project/schema (projects project))
         pc (patch fr to)]
     (when-let [errors (seq (pa/check sc pc))]
       (throw (ex-info "cannot rename table" {:errors errors})))
      (update-in ws
-                [:workspace/databases db :db/migrations]
+                [:workspace/projects project :project/migrations]
                 update-last
                 update :migration/patch patch/compose pc)))
 

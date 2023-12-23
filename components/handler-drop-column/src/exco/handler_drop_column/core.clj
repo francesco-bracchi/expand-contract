@@ -4,7 +4,7 @@
             [exco.defaults.interface  :as defaults]
             [exco.column.interface :as column]
             [exco.patch.interface :as patch]
-            [exco.db.interface :as db]
+            [exco.project.interface :as project]
             [exco.patch-apply.interface  :as pa]
             [exco.format.interface :as format]
             [exco.workspace-io.interface :as io]))
@@ -21,18 +21,18 @@
           :column (column/validate! col)}])
 
 (defn drop-column
-  [{:workspace/keys [default-db databases] :as ws}
-   {:keys [database table name]}]
-  (let [db (or (keyword database) default-db)
+  [{:workspace/keys [default-project projects] :as ws}
+   {:keys [project table name]}]
+  (let [project (or (keyword project) default-project)
         tn (clj/keyword table)
         cn (clj/keyword name)
-        sc (db/schema  (databases db))
+        sc (project/schema  (projects project))
         cl (-> sc :schema/tables (get tn) :table/columns (get cn))
         pc (patch tn cn cl)]
     (when-let [errors (seq (pa/check sc pc))]
       (throw (ex-info "cannot drop column" {:errors errors})))
      (update-in ws
-                [:workspace/databases db :db/migrations]
+                [:workspace/projects project :project/migrations]
                 update-last
                 update :migration/patch patch/compose pc)))
 

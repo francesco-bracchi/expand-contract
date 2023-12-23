@@ -1,24 +1,24 @@
 (ns exco.workspace.spec
   (:require [clojure.spec.alpha :as s]
-            [exco.db.interface]))
+            [exco.project.interface]))
 
 (s/def :workspace/revision
   (s/and string? (partial re-matches #"[0-9]+\.[0.9]+.[0-9+.](-.+)?")))
 
-(s/def :workspace/databases
-  (s/map-of keyword? :db/t))
+(s/def :workspace/projects
+  (s/map-of keyword? :project/t))
 
-(s/def :workspace/default-db
+(s/def :workspace/default-project
   keyword?)
 
 (defn default-db-exists?
-  [#:workspace{:keys [databases default-db]}]
-  (some? (databases default-db)))
+  [#:workspace{:keys [projects default-project]}]
+  (some? (projects default-project)))
 
 (s/def :workspace/t
   (s/and
    (s/keys :req [:workspace/revision
-                 :workspace/databases
-                 :workspace/default-db
+                 :workspace/projects
+                 :workspace/default-project
                  :workspace/migrations-dir])
    default-db-exists?))

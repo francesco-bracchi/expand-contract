@@ -5,7 +5,7 @@
                                exco/table {:local/root "components/table"}
                                exco/index {:local/root "components/index"}
                                exco/schema {:local/root "components/schema"}
-                               exco/db {:local/root "components/db"}
+                               exco/project {:local/root "components/project"}
                                exco/defaults {:local/root "components/defaults"}
                                exco/format {:local/root "components/format"}
                                exco/workspace {:local/root "components/workspace"}
@@ -44,7 +44,7 @@
                                  "components/table/test"
                                  "components/index/test"
                                  "components/schema/test"
-                                 "components/db/test"
+                                 "components/project/test"
                                  "components/defaults/test"
                                  "components/workspace/test"
                                  "components/workspace-io/test"

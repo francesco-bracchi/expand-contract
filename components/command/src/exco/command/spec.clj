@@ -30,10 +30,10 @@
 (s/def ::migrations-dir
   ::directory)
 
-(s/def ::default-db
+(s/def ::default-project
   ::name)
 
-(s/def ::database
+(s/def ::project
   ::name)
 
 (s/def ::description
@@ -75,51 +75,51 @@
   (s/keys :opt-un [::directory
                    ::workspace-file
                    ::migrations-dir
-                   ::default-db]))
+                   ::default-project]))
 
 (defmethod action :check
   [_]
   (s/keys :opt-un [::directory
                    ::workspace-file
-                   ::database]))
+                   ::project]))
 
 (defmethod action :latest
   [_]
   (s/keys :opt-un [::directory
                    ::workspace-file
-                   ::database]))
+                   ::project]))
 
 (defmethod action :create-migration
   [_]
   (s/keys :req-un [::name]
-          :opt-un [::database
+          :opt-un [::project
                    ::description
                    ::directory
                    ::workspace-file]))
 
 (defmethod action :latest
   [_]
-  (s/keys :opt-un [::database
+  (s/keys :opt-un [::project
                    ::directory
                    ::workspace-file]))
 
 (defmethod action :create-table
   [_]
   (s/keys :req-un [::name]
-          :opt-un [::database
+          :opt-un [::project
                    ::directory
                    ::workspace-file]))
 
 (defmethod action :drop-table
   [_]
   (s/keys :req-un [::name]
-          :opt-un [::database
+          :opt-un [::project
                    ::directory
                    ::workspace-file]))
 
 (defmethod action :schema
   [_]
-  (s/keys :opt-un [::database
+  (s/keys :opt-un [::project
                    ::directory
                    ::workspace-file
                    ::color]))
@@ -134,7 +134,7 @@
   (s/keys :req-un [::table
                    ::name
                    ::type]
-          :opt-un [::database
+          :opt-un [::project
                    ::nullable
                    ::default
                    ::unique
@@ -148,4 +148,4 @@
 
 (defmethod action :ddl
   [_]
-  (s/keys :opt-un [::database]))
+  (s/keys :opt-un [::project]))

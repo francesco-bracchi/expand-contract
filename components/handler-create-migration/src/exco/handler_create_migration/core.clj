@@ -11,18 +11,18 @@
    :workspace-file defaults/workspace-file})
 
 (defn default-description
-  [name database]
-  (str "<FIXME> migration '" (clj/name name) "' on " (clj/name database)))
+  [name project]
+  (str "<FIXME> migration '" (clj/name name) "' on " (clj/name project)))
 
 (defn create-migration
-  [{:workspace/keys [migrations-dir default-db] :as ws}
-   {:keys [name database description]}]
-  (let [db (keyword (or database default-db))
-        mg-desc (or description (default-description name db))
-        mg-file (fs/dir migrations-dir (clj/name db) (str (clj/name name) ".edn"))
+  [{:workspace/keys [migrations-dir default-project] :as ws}
+   {:keys [name project description]}]
+  (let [project (keyword (or project default-project))
+        mg-desc (or description (default-description name project))
+        mg-file (fs/dir migrations-dir (clj/name project) (str (clj/name name) ".edn"))
         mg-data (migration/empty mg-desc)
         mg-ref (io/ref mg-file mg-data)]
-    (update-in ws [:workspace/databases db :db/migrations] conj mg-ref)))
+    (update-in ws [:workspace/projects project :project/migrations] conj mg-ref)))
 
 (defn handle*
   [{:keys [workspace-file directory] :as cmd}]

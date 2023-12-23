@@ -1,6 +1,6 @@
 (ns exco.handler-check.core
   (:require [exco.workspace-io.interface :as io]
-            [exco.db.interface :as db]
+            [exco.project.interface :as project]
             [exco.defaults.interface :as defaults]))
 
 (def default-cmd
@@ -8,9 +8,9 @@
    :workspace-file defaults/workspace-file})
 
 (defn check!
-  [{:workspace/keys [default-db databases]} {:keys [database]}]
-   (let [db (or database default-db)
-         {:keys [errors] :as res} (db/migrations-explain (databases db))]
+  [{:workspace/keys [default-project projects]} {:keys [project]}]
+   (let [project (or project default-project)
+         {:keys [errors] :as res} (project/migrations-explain (projects project))]
      (when (seq errors) (throw (ex-info "check-failed" res)))))
 
 (defn handle*

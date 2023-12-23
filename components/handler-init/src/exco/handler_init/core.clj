@@ -1,49 +1,49 @@
 (ns exco.handler-init.core
   (:require [exco.defaults.interface :as defaults]
             [exco.fs.interface :as fs]
-            [exco.db.interface :as db]
+            [exco.project.interface :as project]
             [exco.migration.interface :as mg]
             [exco.workspace-io.interface :as io]
             [exco.workspace.interface :as ws]))
 
 (def basic-workspace
   #:workspace{:revision "0.0.1"
-              :databases {}})
+              :projects {}})
 
 (defn set-migrations-dir
   [ws {:keys [migrations-dir]}]
   (assoc ws :workspace/migrations-dir migrations-dir))
 
-(defn create-database
-  [ws {:keys [migrations-dir default-db db-description]}]
-  (let [db-des (or db-description "main application database")
-        db-dir (fs/dir migrations-dir (name default-db))
-        db-data (db/empty db-des)]
-    (fs/mkdir db-dir)
+(defn create-project
+  [ws {:keys [migrations-dir default-project project-description]}]
+  (let [project-des (or project-description "main application project")
+        project-dir (fs/dir migrations-dir (name default-project))
+        project-data (project/empty project-des)]
+    (fs/mkdir project-dir)
     (-> ws
-        (update :workspace/databases assoc (keyword default-db) db-data)
-        (assoc :workspace/default-db (keyword default-db)))))
+        (update :workspace/projects assoc (keyword default-project) project-data)
+        (assoc :workspace/default-project (keyword default-project)))))
 
 (defn create-migration
-  [ws {:keys [migrations-dir default-db migration migration-description]}]
+  [ws {:keys [migrations-dir default-project migration migration-description]}]
   (let [mg-des (or migration-description (str "<FIXME> first migration '" (name migration) "'"))
-        mg-file (fs/dir migrations-dir (name default-db) (str (name migration) ".edn"))
+        mg-file (fs/dir migrations-dir (name default-project) (str (name migration) ".edn"))
         mg-data (mg/empty mg-des)
         mg-ref (io/ref mg-file mg-data)]
-    (update-in ws [:workspace/databases default-db :db/migrations] conj mg-ref)))
+    (update-in ws [:workspace/projects default-project :project/migrations] conj mg-ref)))
 
 (def default-args
   {:directory defaults/directory
    :workspace-file defaults/workspace-file
    :migrations-dir defaults/migrations-dir
-   :default-db defaults/db
+   :default-project defaults/project
    :migration (symbol defaults/migration)})
 
 (defn build-ws
   [cmd]
   (-> basic-workspace
       (set-migrations-dir cmd)
-      (create-database cmd)
+      (create-project cmd)
       (create-migration cmd)
       (ws/validate!)))
 

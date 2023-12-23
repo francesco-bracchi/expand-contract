@@ -20,19 +20,19 @@
   ([desc table]
    (assoc desc :merge-into table)))
 
-(-> (merge-into :database)
+(-> (merge-into :project)
     (h/columns :name :description)
     (h/values [{:name "name"}])
     (sql/format *opts*))
 
-(defn databases
-  ([] (databases *opts*))
+(defn projects
+  ([] (projects *opts*))
   ([opts]
-   (-> (h/from :database)
+   (-> (h/from :project)
        (h/select :id :name :description)
        (sql/format opts))))
 
-;; (databases)
+;; (projects)
 
 
 (defn pair->val
@@ -46,10 +46,10 @@
        (map pair->val)
        (into [])))
 
-(defn align-databases
-  ([vals] (align-databases vals *opts*))
+(defn align-projects
+  ([vals] (align-projects vals *opts*))
   ([vals opts]
-   (-> (merge-into :database)
+   (-> (merge-into :project)
        (h/columns :id :name :description)
        (h/values (values vals))
        (sql/format opts))))
