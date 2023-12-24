@@ -30,11 +30,8 @@
                                exco/handler-drop-column {:local/root "components/handler-drop-column"}
                                exco/handler-rename-table {:local/root "components/handler-rename-table"}
                                exco/handler-ddl {:local/root "components/handler-ddl"}
-                               exco/ddl {:local/root "components/ddl"}
-                               exco/ddl-postgres {:local/root "components/ddl-postgresql"}
                                exco/connection {:local/root "components/connection"}
-                               exco/state {:local/root "components/state"}
-                               ;; exco/strategy {:local/root "components/strategy"}
+
                                ;; bases
                                exco/cli {:local/root "bases/cli"}
                                }}
@@ -67,11 +64,7 @@
                                  "components/handler-drop-column/test"
                                  "components/handler-rename-table/test"
                                  "components/schema-ddl/test"
-                                 "components/ddl/test"
-                                 "components/ddl-postgresql/test"
-                                 ;; "components/strategy/test"
                                  "components/connection/test"
-                                 "components/state/test"
                                  ;; bases
                                  "bases/cli/test"]}
             :build {:deps {io.github.clojure/tools.build

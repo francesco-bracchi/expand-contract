@@ -25,7 +25,7 @@
   (let [project (or (keyword project) default-project)
         sc (project/schema (projects project))
         tb (clj/keyword name)
-        cs  (-> sc :schema/tables (get tb) :project/columns)
+        cs  (-> sc :schema/tables (get tb) :table/columns)
         pc (patch tb cs)]
     (when-let [errors (seq (pa/check sc pc))]
       (throw (ex-info "cannot drop table" {:errors errors})))

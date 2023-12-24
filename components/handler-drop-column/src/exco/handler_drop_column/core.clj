@@ -26,7 +26,7 @@
   (let [project (or (keyword project) default-project)
         tn (clj/keyword table)
         cn (clj/keyword name)
-        sc (project/schema  (projects project))
+        sc (project/schema (projects project))
         cl (-> sc :schema/tables (get tn) :table/columns (get cn))
         pc (patch tn cn cl)]
     (when-let [errors (seq (pa/check sc pc))]

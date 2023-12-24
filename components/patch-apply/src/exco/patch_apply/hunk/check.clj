@@ -51,7 +51,7 @@
   (checks (when (not (tables table-name))
             #:check{:error :check/table-miss
                     :hunk hunk})
-          (when (not= columns (:colums (tables table-name)))
+          (when (not= columns (:table/columns (tables table-name)))
             #:check{:error :check/table-columns-mismatch
                     :hunk hunk})
           (when (some (partial indexed-by? table-name) (vals indexes))

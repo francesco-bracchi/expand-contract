@@ -30,9 +30,6 @@
         exco/handler-rename-table {:local/root "../../components/handler-rename-table"}
         exco/handler-ddl {:local/root "../../components/handler-ddl"}
         exco/handler {:local/root "../../components/handler"}
-        exco/ddl {:local/root "../../components/ddl"}
-        exco/strategy {:local/root "../../components/strategy"}
-        exco/ddl-postgresql {:local/root "../../components/ddl-postgresql"}
 
         ;; bases
         exco/cli {:local/root "../../bases/cli"}}

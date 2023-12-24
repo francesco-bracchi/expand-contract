@@ -1,9 +1,7 @@
 (ns exco.cli.core
   (:require [exco.command.interface :as command]
             [exco.handler.interface :as handler]
-            [exco.format.interface  :as format]
-            [exco.ddl.interface :as adapt]
-            [exco.ddl-postgresql.interface :as pg])
+            [exco.format.interface  :as format])
   (:gen-class))
 
 ;; todo: separate in specific functions handling errors
@@ -12,8 +10,9 @@
 (defn -main
   [& args]
   (try
-    (-> args (command/parse) (handler/handle))
-    (System/exit 0)
+    (-> args
+        (command/parse)
+        (handler/handle))
     (catch clojure.lang.ExceptionInfo ex
       (println (ex-message ex))
       (format/print-color (ex-data ex))
