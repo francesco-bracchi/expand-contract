@@ -24,7 +24,12 @@
              (when default ["DEFAULT" default])
              (when unique? ["UNIQUE"])
              (when primary-key? ["PRIMARY KEY"])
-             (when reference ["REFERENCES " (:reference/table reference) "(" (:reference/column reference) ")"])))))
+             (when reference ["REFERENCES"
+                              (str
+                               (escape (:reference/table reference))
+                               "("
+                               (escape (:reference/column reference))
+                               ")")])))))
 
 (defn ddl-columns
   [cols]

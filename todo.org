@@ -1,0 +1,12 @@
+* workspace manipulation
+** TODO Alter table
+** TODO Alter column
+** TODO Create/Ddrop indexes
+
+* database manipulation
+** TODO save migration history
+** TODO consistency check (hash?)
+** TODO actual application
+
+* Split
+** TODO move heavylifting on remote db
