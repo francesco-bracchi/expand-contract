@@ -4,20 +4,33 @@
             [exco.format.interface  :as format])
   (:gen-class))
 
-;; todo: separate in specific functions handling errors
-;; in parsing commands and handle
-;; try to give nice and clear error messages (and hints on what's wrong)
+
+(defn print-error
+  [err]
+  (binding [*out* *err*]
+    (err)))
+
+(defn main
+  [args]
+  (try (-> args
+           (command/parse)
+           (handler/handle))
+       0
+       (catch clojure.lang.ExceptionInfo ex
+         (binding [*out* *err*]
+           (format/print-error (:reason (ex-data ex)))
+           (println)
+           1))
+
+       (catch Exception ex
+         (binding [*out* *err*]
+           (println "unknown exception")
+           (format/print-color ex)
+           (println))
+         2)))
+
+(main [])
+
 (defn -main
   [& args]
-  (try
-    (-> args
-        (command/parse)
-        (handler/handle))
-    (catch clojure.lang.ExceptionInfo ex
-      (println (ex-message ex))
-      (format/print-color (ex-data ex))
-      (System/exit 1))
-    (catch Exception ex
-      (println "unknown exception")
-      (format/print-color ex)
-      (System/exit 2))))
+  (-> args (main) (System/exit)))
