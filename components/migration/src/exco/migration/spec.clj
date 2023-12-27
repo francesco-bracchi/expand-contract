@@ -2,7 +2,6 @@
   (:require [clojure.spec.alpha :as s]
             [exco.patch.interface]))
 
-
 (s/def :migration/patch
   :patch/t)
 

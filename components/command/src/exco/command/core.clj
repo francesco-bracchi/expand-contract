@@ -2,6 +2,12 @@
   (:require [clojure.spec.alpha :as s]
             [exco.command.spec]))
 
+
+;;; TODO:
+;;; SEPARATE specs
+;; the input of parse should be as loose as possible but the output
+;; should be as precise as possible
+
 (defn valid?
   [cmd]
   (s/valid? :command/t cmd))

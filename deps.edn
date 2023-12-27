@@ -31,7 +31,8 @@
                                exco/handler-rename-table {:local/root "components/handler-rename-table"}
                                exco/handler-ddl {:local/root "components/handler-ddl"}
                                exco/connection {:local/root "components/connection"}
-
+                               exco/binding {:local/root "components/binding"}
+                               exco/migration-log {:local/root "components/migration-log"}
                                ;; bases
                                exco/cli {:local/root "bases/cli"}
                                }}
@@ -65,6 +66,8 @@
                                  "components/handler-rename-table/test"
                                  "components/schema-ddl/test"
                                  "components/connection/test"
+                                 "components/binding/test"
+                                 "components/migration-log/test"
                                  ;; bases
                                  "bases/cli/test"]}
             :build {:deps {io.github.clojure/tools.build

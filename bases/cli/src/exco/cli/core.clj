@@ -4,33 +4,23 @@
             [exco.format.interface  :as format])
   (:gen-class))
 
-
-(defn print-error
-  [err]
-  (binding [*out* *err*]
-    (err)))
-
 (defn main
-  [args]
-  (try (-> args
-           (command/parse)
-           (handler/handle))
-       0
+  [& args]
+   (-> args
+       (command/parse)
+       (handler/handle)))
+
+(defn -main
+  [& args]
+  (try (apply main args)
        (catch clojure.lang.ExceptionInfo ex
          (binding [*out* *err*]
            (format/print-error (:reason (ex-data ex)))
            (println)
-           1))
-
+           (System/exit 1)))
        (catch Exception ex
          (binding [*out* *err*]
            (println "unknown exception")
            (format/print-color ex)
-           (println))
-         2)))
-
-(main [])
-
-(defn -main
-  [& args]
-  (-> args (main) (System/exit)))
+           (println)
+           (System/exit 2)))))
