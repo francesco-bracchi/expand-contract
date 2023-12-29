@@ -45,6 +45,7 @@
 
 (s/def :reference/name
   (s/or :kw keyword?
+        :sym symbol?
         :str (s/and string? seq)))
 
 (s/def :reference/table

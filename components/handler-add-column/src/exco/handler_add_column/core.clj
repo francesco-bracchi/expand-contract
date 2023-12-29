@@ -20,7 +20,8 @@
                    :unique? (boolean unique)
                    :primary-key? (boolean primary-key)}
     (some? default) (assoc :column/default default)
-    (some? reference) (assoc :column/reference #:reference{:table (first reference) :column (second reference)})))
+    (some? reference) (assoc :column/reference #:reference{:table (keyword (first reference))
+                                                           :column (keyword (second reference))})))
 
 (defn patch
   [{:keys [table name] :as cmd}]
@@ -32,7 +33,7 @@
 (defn add-column
   [{:workspace/keys [default-project projects] :as ws}
    {:keys [project] :as cmd}]
-  (let [project (or (keyword project) default-project)
+  #break (let [project (or (keyword project) default-project)
         pc (patch cmd)
         sc (project/schema! (projects project))]
     (when-let [errors (seq (pa/check sc pc))]

@@ -18,3 +18,12 @@
 
 (def color
   true)
+
+(def migrator-type
+  :local)
+
+(def migrator-db-url
+  "jdbc:sqlite:./.exco/migrator-local.db")
+
+(def env
+  "dev")

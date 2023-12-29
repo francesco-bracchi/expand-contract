@@ -15,8 +15,13 @@
         exco/patch-apply {:local/root "../../components/patch-apply"}
         exco/defauts {:local/root "../../components/defaults"}
         exco/schema-ddl {:local/root "../../components/schema-ddl"}
+        exco/binding {:local/root "../../components/binding"}
+        exco/migration-log {:local/root "../../components/migration-log"}
         exco/command {:local/root "../../components/command"}
         exco/workspace-io {:local/root "../../components/workspace-io"}
+        exco/connection {:local/root "../../components/connection"}
+        exco/migrator {:local/root "../../components/migrator"}
+        exco/migrator-local {:local/root "../../components/migrator-local"}
         exco/handler-init {:local/root "../../components/handler-init"}
         exco/handler-create-migration {:local/root "../../components/handler-create-migration"}
         exco/handler-latest {:local/root "../../components/handler-latest"}
@@ -29,6 +34,10 @@
         exco/handler-drop-column {:local/root "../../components/handler-drop-column"}
         exco/handler-rename-table {:local/root "../../components/handler-rename-table"}
         exco/handler-ddl {:local/root "../../components/handler-ddl"}
+        exco/handler-init-migrator {:local/root "../../components/handler-init-migrator"}
+        exco/handler-bind {:local/root "../../components/handler-bind"}
+        exco/handler-unbind {:local/root "../../components/handler-unbind"}
+        exco/handler-info {:local/root "../../components/handler-info"}
         exco/handler {:local/root "../../components/handler"}
 
         ;; bases

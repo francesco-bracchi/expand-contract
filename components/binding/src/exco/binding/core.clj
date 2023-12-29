@@ -1,22 +1,35 @@
 (ns exco.binding.core
   (:refer-clojure :exclude [get])
-  (:require [clojure.java.io :as io]
-            [honey.sql.helpers :as sqh]))
+  (:require [honey.sql.helpers :as sqh]))
+
+(def ^:const table
+  :bindings)
 
 (defn ddl
   [_dialect]
-  [(-> "binding/create.ddl"
-      io/resource
-      slurp)])
+  (-> (sqh/create-table table)
+      (sqh/with-columns
+        [:id :integer :primary_key]
+        [:project :text [:not nil]]
+        [:env :text [:not nil]]
+        [:conn :text [:not nil]]
+        [[:constraint :unique_env_per_project] :unique [:composite :project :env]])))
 
-(defn bind!
-  [& bindings]
-  (-> (sqh/insert-into :bindings)
-      (sqh/columns :project :env :conn)
-      (sqh/values bindings)))
+(defn insert
+  []
+  (sqh/insert-into table))
 
-(def ^:const table
-  (sqh/from :bindings))
+(defn delete
+  []
+  (sqh/delete-from table))
+
+(defn query
+  []
+  (sqh/from table))
+
+(defn fields
+  [query]
+  (sqh/select query :id :project :env :conn))
 
 (defn with-project
   [query prj]
@@ -25,9 +38,3 @@
 (defn with-env
   [query env]
   (sqh/where query  := :env env))
-
-(defn get
-  [query prj env]
-  (-> query
-      (with-project prj)
-      (with-env env)))

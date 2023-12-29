@@ -99,7 +99,7 @@
           (when-let [{:reference/keys [table column]} (:column/reference column)]
             (when-not (-> tables (get table) :table/columns (get column))
               #:check{:error :check/invalid-reference
-                      :hunk :hunk}))))
+                      :hunk hunk}))))
 
 (defmethod check :action/drop-column
   [#:schema{:keys [indexes tables]} {:hunk/keys [table-name column-name column] :as hunk}]

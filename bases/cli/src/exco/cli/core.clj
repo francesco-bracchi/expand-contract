@@ -24,3 +24,37 @@
            (format/print-color ex)
            (println)
            (System/exit 2)))))
+
+#_(main "init")
+
+#_(main "init-migrator")
+
+#_(main "bind" ":db-url" "\"jdbc:h2:./exco/main-dev.db\"")
+
+#_(main "info")
+
+#_(main "create-table" ":name" "users")
+
+#_(main "add-column" ":table" "users" ":name" "id" ":type" ":type/uuid" ":primary-key" "true")
+
+#_(main "add-column" ":table" "users" ":name" "name" ":type" ":type/text" ":unique" "true")
+
+#_(main "add-column" ":table" "users" ":name" "first_name" ":type" ":type/text")
+
+#_(main "add-column" ":table" "users" ":name" "last_name" ":type" ":type/text")
+
+#_(main "create-migration" ":name" "articles")
+
+#_(main "create-table" ":name" "articles")
+
+#_(main "add-column" ":table" "articles" ":name" "id" ":type" ":type/uuid" ":primary-key" "true")
+
+#_(main "add-column" ":table" "articles" ":name" "title" ":type" ":type/text")
+
+#_(main "add-column" ":table" "articles" ":name" "body" ":type" ":type/text")
+
+#_(main "add-column" ":table" "articles" ":name" "author" ":type" ":type/uuid" ":reference" "[users id]")
+
+#_(main "info")
+
+#_(main "ddl")

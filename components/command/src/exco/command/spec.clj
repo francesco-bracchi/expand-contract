@@ -13,7 +13,9 @@
     :drop-column
     :schema
     :ddl
-    :help})
+    :help
+    :bind
+    :unbind})
 
 (s/def ::action
   actions)
@@ -63,6 +65,18 @@
 (s/def ::reference
   (s/cat :table ::name
          :column ::name))
+
+(s/def ::env
+  ::name)
+
+(s/def ::project
+  ::name)
+
+(s/def ::db-url
+  string?)
+
+(s/def ::migrator
+  ::name)
 
 (defmulti action
   :action)
@@ -149,3 +163,31 @@
 (defmethod action :ddl
   [_]
   (s/keys :opt-un [::project]))
+
+(defmethod action :init-migrator
+  [_]
+  (s/keys :opt-un [::directory
+                   ::workspace-file
+                   ::migrator]))
+
+(defmethod action :bind
+  [_]
+  (s/keys :opt-un [::directory
+                   ::workspace-file
+                   ::migrator
+                   ::project
+                   ::env]
+          :req-un [::db-url]))
+
+(defmethod action :unbind
+  [_]
+  (s/keys :opt-un [::directory
+                   ::workspace-file
+                   ::migrator
+                   ::project
+                   ::env]))
+
+(defmethod action :info
+  [_]
+  (s/keys :opt-un [::directory
+                   ::workspace-file]))

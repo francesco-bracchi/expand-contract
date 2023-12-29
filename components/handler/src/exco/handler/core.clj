@@ -12,7 +12,11 @@
             [exco.handler-add-column.interface :as add-column]
             [exco.handler-drop-column.interface :as drop-column]
             [exco.handler-ddl.interface :as ddl]
-            [exco.handler-check.interface :as check]))
+            [exco.handler-check.interface :as check]
+            [exco.handler-bind.interface :as bind]
+            [exco.handler-unbind.interface :as unbind]
+            [exco.handler-init-migrator.interface :as init-migrator]
+            [exco.handler-info.interface :as info]))
 
 (defmulti handle
   :action)
@@ -68,6 +72,22 @@
 (defmethod handle :ddl
   [cmd]
   (ddl/handle cmd))
+
+(defmethod handle :init-migrator
+  [cmd]
+  (init-migrator/handle cmd))
+
+(defmethod handle :info
+  [cmd]
+  (info/handle cmd))
+
+(defmethod handle :bind
+  [cmd]
+  (bind/handle cmd))
+
+(defmethod handle :unbind
+  [cmd]
+  (unbind/handle cmd))
 
 (s/fdef handle
   :args (s/cat :cmd :command/t))

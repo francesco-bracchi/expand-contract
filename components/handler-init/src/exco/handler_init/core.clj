@@ -8,7 +8,10 @@
 
 (def basic-workspace
   #:workspace{:revision "0.0.1"
-              :projects {}})
+              :projects {}
+              :migrators {:local {:migrator/type defaults/migrator-type
+                                  :migrator/db-url defaults/migrator-db-url}}
+              :default-migrator :local})
 
 (defn set-migrations-dir
   [ws {:keys [migrations-dir]}]

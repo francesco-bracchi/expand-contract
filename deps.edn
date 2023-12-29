@@ -17,6 +17,11 @@
                                exco/command {:local/root "components/command"}
                                exco/fs {:local/root "components/fs"}
                                exco/schema-ddl {:local/root "components/schema-ddl"}
+                               exco/connection {:local/root "components/connection"}
+                               exco/binding {:local/root "components/binding"}
+                               exco/migration-log {:local/root "components/migration-log"}
+                               exco/migrator {:local/root "components/migrator"}
+                               exco/migrator-local {:local/root "components/migrator-local"}
                                exco/handler {:local/root "components/handler"}
                                exco/handler-help {:local/root "components/handler-help"}
                                exco/handler-init {:local/root "components/handler-init"}
@@ -29,10 +34,11 @@
                                exco/handler-add-column {:local/root "components/handler-add-column"}
                                exco/handler-drop-column {:local/root "components/handler-drop-column"}
                                exco/handler-rename-table {:local/root "components/handler-rename-table"}
+                               exco/handler-init-migrator {:local/root "components/handler-init-migrator"}
+                               exco/handler-bind {:local/root "components/handler-bind"}
+                               exco/handler-unbind {:local/root "components/handler-unbind"}
+                               exco/handler-info {:local/root "components/handler-info"}
                                exco/handler-ddl {:local/root "components/handler-ddl"}
-                               exco/connection {:local/root "components/connection"}
-                               exco/binding {:local/root "components/binding"}
-                               exco/migration-log {:local/root "components/migration-log"}
                                ;; bases
                                exco/cli {:local/root "bases/cli"}
                                }}
@@ -68,6 +74,7 @@
                                  "components/connection/test"
                                  "components/binding/test"
                                  "components/migration-log/test"
+                                 "components/handler-info/test"
                                  ;; bases
                                  "bases/cli/test"]}
             :build {:deps {io.github.clojure/tools.build

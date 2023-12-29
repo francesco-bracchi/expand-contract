@@ -6,12 +6,21 @@
   [d]
   (core/ddl d))
 
-(defn bind!
-  [project env conn]
-  (core/bind! project env conn))
+(defn insert
+  []
+  (core/insert))
 
-(def ^:const table
-  core/table)
+(defn delete
+  []
+  (core/delete))
+
+(defn query
+  []
+  (core/query))
+
+(defn fields
+  [q]
+  (core/fields q))
 
 (defn with-project
   [query prj]
@@ -20,7 +29,3 @@
 (defn with-env
   [query env]
   (core/with-env query env))
-
-(defn get
-  [query prj env]
-  (core/get query prj env))
